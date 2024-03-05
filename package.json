@@ -6,8 +6,7 @@
   "scripts": {
     "test": "vitest",
     "test:ci": "vitest run",
-    "test:coverage": "vitest run --coverage",
-    "test:coverage:ci": "npm run test:coverage -- --outputFile ./coverage/report.json && ./scripts/save-test-coverage.js"
+    "test:coverage:ci": "vitest run --coverage --reporter=json --outputFile ./coverage/report.json && ./scripts/save-coverage-file.js"
   },
   "author": "",
   "license": "ISC",
