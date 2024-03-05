@@ -6,7 +6,7 @@
   "scripts": {
     "test": "vitest",
     "test:ci": "vitest run",
-    "coverage": "vitest run --coverage"
+    "coverage": "vitest run --coverage && cp coverage/coverage-final.json report.json"
   },
   "author": "",
   "license": "ISC",
