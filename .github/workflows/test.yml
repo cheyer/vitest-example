@@ -18,7 +18,7 @@ jobs:
       - name: Install Dependencies
         run: npm install
 
-      - uses: cheyer/jest-coverage-report-action@23daf3a716f0d55ac56b43cd4b09f4b57039587d
+      - uses: cheyer/jest-coverage-report-action@0e6e7d3ba9f94952a81e683d9c93069243f67e3b
         with:
           test-script: npm run coverage
           skip-step: install
