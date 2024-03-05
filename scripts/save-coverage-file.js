@@ -1,25 +1,51 @@
 #!/usr/bin/env node
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const fs = require("fs");
 
-/*
-  don't forget to update `coverage-file` input inside workflow when specifying path here
-  `test.yml`
-  with:
-    coverage-file: ./coverage/report.json
-*/
-const testReportFilename = process.cwd() + "/coverage/report.json";
-const coverageReportFilename = process.cwd() + "/coverage/coverage-final.json";
+const reportFilename = "report.json";
+const coverageFinalFilename = "coverage-final.json";
+const cwd = process.cwd();
 
-const testReport = require(testReportFilename);
-const coverageReport = require(coverageReportFilename);
+const reportJsonFilepath = `${cwd}/coverage/${reportFilename}`;
+const coverageFinalFilepath = `${cwd}/coverage/${coverageFinalFilename}`;
 
-testReport.coverageMap = coverageReport;
+let reportJsonFile;
+let coverageFinalJsonFile;
 
-fs.writeFile(testReportFilename, JSON.stringify(testReport), (err) => {
-  if (err) {
-    console.error(err);
-    process.exit(1);
-  }
+if (fs.existsSync(reportJsonFilepath)) {
+  reportJsonFile = require(reportJsonFilepath);
+}
+if (fs.existsSync(coverageFinalFilepath)) {
+  coverageFinalJsonFile = require(coverageFinalFilepath);
+}
 
-  console.log("Coverage report appended to " + testReportFilename);
+console.log("Files exists?", {
+  reportFilename: !!reportJsonFile,
+  coverageFinalFilename: !!coverageFinalJsonFile,
 });
+if (reportJsonFile && coverageFinalJsonFile) {
+  if (!reportJsonFile.coverageMap) {
+    console.log(
+      `Adding coverageMap property to ${reportFilename} based on ${coverageFinalFilename}`
+    );
+    reportJsonFile.coverageMap = coverageFinalJsonFile;
+    fs.writeFileSync(
+      reportJsonFilepath,
+      JSON.stringify(reportJsonFile),
+      (err) => {
+        if (err) {
+          console.error(err);
+          process.exit(1);
+        }
+      }
+    );
+  } else {
+    console.log(
+      `coverageMap already exists in ${reportFilename}, not doing anything...`
+    );
+    process.exit(0);
+  }
+} else {
+  console.log("Not doing anything...");
+  process.exit(0);
+}
