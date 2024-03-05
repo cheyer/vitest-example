@@ -18,7 +18,7 @@ jobs:
       - name: Install Dependencies
         run: npm install
 
-      - uses: ArtiomTr/jest-coverage-report-action@v2
+      - uses: cheyer/jest-coverage-report-action@c026e98
         with:
           test-script: npm run coverage
           skip-step: install
