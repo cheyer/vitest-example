@@ -20,5 +20,5 @@ jobs:
 
       - uses: cheyer/jest-coverage-report-action@0e6e7d3ba9f94952a81e683d9c93069243f67e3b
         with:
-          test-script: npm run coverage:ci
+          test-script: npm run test:coverage:ci
           skip-step: install
