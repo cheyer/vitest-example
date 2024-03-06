@@ -22,3 +22,4 @@ jobs:
         with:
           test-script: npm run test:coverage:ci
           skip-step: install
+          annotations: failed-tests
