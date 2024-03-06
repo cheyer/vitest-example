@@ -1,0 +1,25 @@
+name: "coverage"
+on:
+  pull_request:
+    branches:
+      - main
+jobs:
+  coverage:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check Out Repository
+        uses: actions/checkout@v3
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: "npm"
+
+      - name: Install Dependencies
+        run: npm install
+
+      - uses: cheyer/jest-coverage-report-action@0e6e7d3ba9f94952a81e683d9c93069243f67e3b
+        with:
+          test-script: npm run test:coverage:ci
+          skip-step: install
+          annotations: failed-tests
